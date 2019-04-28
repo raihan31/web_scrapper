@@ -1,30 +1,27 @@
-hostname = 'localhost'
-username = 'USERNAME'
-password = 'PASSWORD'
-database = 'DBNAME'
-
-# Simple routine to run a query on a database and print the results:
-def doQuery( conn ) :
-    cur = conn.cursor()
-    cur.execute( "SELECT fname, lname FROM employee" )
-    for firstname, lastname in cur.fetchall() :
-        print (firstname, lastname)
-print ("Using psycopg2…")
 import psycopg2
-myConnection = psycopg2.connect( host=hostname, user=username, password=password, dbname=database )
-doQuery( myConnection )
-myConnection.close()
-
-print ("Using PyGreSQL…")
 import pgdb
-myConnection = pgdb.connect( host=hostname, user=username, password=password, database=database )
-doQuery( myConnection )
-myConnection.close()
-
-class MedExDb:
+class MedExDb(object):
     hostname = 'localhost'
-    username = 'USERNAME'
-    password = 'PASSWORD'
-    database = 'DBNAME'
+    username = 'postgres'
+    password = '1qazZAQ!'
+    database = 'medexdb'
     def __init__(self, host, user, password, db_name):
+        self.hostname = host
+        self.username = user
+        self.password = password
+        self.database = db_name
+    
+    def db_query(conn):
+        cur = conn.cursor()
+        cur.execute( "SELECT name, price FROM drugs" )
+        return cur
+
+    def ps_connect():
+        return pgdb.connect( host= hostname, user=username, password=password, database=database )
+        
+    def pg_connect():
+        return pgdb.connect( host= hostname, user=username, password=password, database=database )
+
+    def disconnect(conn):
+        conn.close()
         
